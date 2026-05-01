@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACDF 2026 Feedback Form — Awana Philippines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #FDFAF2;
+      min-height: 100vh;
+      color: #2C1A00;
+    }
+
+    .hero {
+      background: #E8961A;
+      padding: 2rem 1.5rem 2.25rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-geo {
+      position: absolute;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .org-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 1.75rem);
+      color: #fff;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-sub {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1.4rem;
+    }
+
+    .stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      flex: 1;
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      transition: all 0.35s ease;
+      background: transparent;
+    }
+
+    .step-circle.active {
+      background: rgba(255,255,255,0.2);
+      border-color: #fff;
+      color: #fff;
+      box-shadow: 0 0 0 5px rgba(255,255,255,0.12);
+    }
+
+    .step-circle.done {
+      background: #fff;
+      border-color: #fff;
+      color: #E8961A;
+    }
+
+    .step-name {
+      font-size: 9px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      font-weight: 500;
+      transition: color 0.35s;
+    }
+
+    .step-name.active { color: rgba(255,255,255,0.9); }
+    .step-name.done { color: rgba(255,255,255,0.65); }
+
+    .step-line {
+      flex: 1;
+      height: 1.5px;
+      background: rgba(255,255,255,0.2);
+      margin: 0 6px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-line-fill {
+      height: 100%;
+      background: #fff;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .step-line.done .step-line-fill { width: 100%; }
+
+    .body {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 4rem;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-anim { animation: cardIn 0.42s cubic-bezier(0.22,1,0.36,1) both; }
+
+    .section-card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #EDE5C8;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-card:nth-child(2) { animation-delay: 0.07s; }
+    .section-card:nth-child(3) { animation-delay: 0.14s; }
+
+    .s-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid #F0E8CC;
+    }
+
+    .s-tag {
+      background: #E8961A;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+
+    .s-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: #3A2800;
+      font-weight: 600;
+    }
+
+    .scale-hint {
+      font-size: 11px;
+      color: #C47B00;
+      background: #FFF8E8;
+      border: 1px solid #EDE5C8;
+      padding: 5px 11px;
+      border-radius: 6px;
+      margin-bottom: 1.1rem;
+      display: inline-block;
+    }
+
+    .q-wrap { margin-bottom: 1.25rem; }
+    .q-wrap:last-child { margin-bottom: 0; }
+
+    .q-label {
+      font-size: 13.5px;
+      color: #2C1A00;
+      font-weight: 400;
+      margin-bottom: 0.65rem;
+      line-height: 1.55;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .q-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFF0CC;
+      color: #C47B00;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 4px;
+      min-width: 19px;
+      height: 19px;
+      padding: 0 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .stars { display: flex; gap: 5px; flex-wrap: wrap; }
+
+    .star-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 9px;
+      border: 1px solid #EDE5C8;
+      background: #FDFAF2;
+      font-size: 14px;
+      font-weight: 500;
+      color: #C47B00;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      gap: 2px;
+    }
+
+    .star-pip {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #EDE5C8;
+      transition: background 0.15s;
+    }
+
+    .star-btn:hover {
+      border-color: #E8961A;
+      background: #FFF5DC;
+      transform: translateY(-2px);
+    }
+
+    .star-btn.sel {
+      background: #E8961A;
+      border-color: #D4841A;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .star-btn.sel .star-pip { background: rgba(255,255,255,0.45); }
+
+    .scale-ends {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      color: #C4A86A;
+      margin-top: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #F5EDD5;
+      margin: 1.15rem 0;
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      border: 1px solid #EDE5C8;
+      border-radius: 9px;
+      padding: 10px 13px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: #2C1A00;
+      background: #FDFAF2;
+      outline: none;
+      transition: border 0.2s, background 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+
+    textarea { min-height: 88px; resize: vertical; }
+
+    textarea:focus,
+    input:focus {
+      border-color: #E8961A;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(232,150,26,0.12);
+    }
+
+    textarea::placeholder,
+    input::placeholder { color: #D4C49A; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .field-group { display: flex; flex-direction: column; gap: 5px; }
+    .field-group.full { grid-column: 1 / -1; }
+
+    .field-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #9A7B3A;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .optional-tag {
+      font-size: 10px;
+      font-weight: 400;
+      color: #C4A86A;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .err {
+      font-size: 11.5px;
+      color: #C0392B;
+      margin-top: 3px;
+      display: none;
+    }
+
+    .show-err .err { display: block; }
+    .show-err input,
+    .show-err textarea { border-color: #E74C3C; }
+
+    .cert-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #FDFAF2;
+      border: 1px solid #EDE5C8;
+      border-radius: 10px;
+      padding: 11px 14px;
+      margin-bottom: 1.25rem;
+    }
+
+    .cert-icon-wrap {
+      width: 28px;
+      height: 28px;
+      background: #E8961A;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cert-icon-wrap svg { width: 14px; height: 14px; fill: #fff; }
+
+    .cert-note-text {
+      font-size: 12.5px;
+      color: #7A5A20;
+      line-height: 1.55;
+    }
+
+    .page-intro { text-align: center; margin-bottom: 1.35rem; }
+
+    .page-intro-icon {
+      width: 56px;
+      height: 56px;
+      background: #FFF5DC;
+      border-radius: 14px;
+      margin: 0 auto 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-intro-icon svg { width: 28px; height: 28px; }
+
+    .page-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      color: #2C1A00;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .page-sub {
+      font-size: 12.5px;
+      color: #B89050;
+      line-height: 1.55;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 1.15rem;
+    }
+
+    .btn-next {
+      flex: 1;
+      background: #E8961A;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.2px;
+    }
+
+    .btn-next:hover { background: #D4841A; transform: translateY(-1px); }
+    .btn-next:active { transform: scale(0.98); }
+    .btn-next:disabled { background: #D4C49A; cursor: not-allowed; transform: none; }
+
+    .btn-back {
+      background: #fff;
+      color: #9A7B3A;
+      border: 1px solid #EDE5C8;
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-back:hover {
+      background: #FDFAF2;
+      border-color: #E8961A;
+      color: #C47B00;
+    }
+
+    /* Success */
+    .success-wrap { text-align: center; padding: 2.5rem 1rem; }
+
+    @keyframes checkPop {
+      0%   { transform: scale(0) rotate(-10deg); }
+      70%  { transform: scale(1.12) rotate(2deg); }
+      100% { transform: scale(1) rotate(0); }
+    }
+
+    .success-icon {
+      width: 76px;
+      height: 76px;
+      background: #E8961A;
+      border-radius: 50%;
+      margin: 0 auto 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: checkPop 0.55s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+    }
+
+    .success-icon svg {
+      width: 36px;
+      height: 36px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-wrap h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      color: #2C1A00;
+      margin-bottom: 0.65rem;
+      font-weight: 700;
+    }
+
+    .success-wrap .tagline {
+      font-size: 13.5px;
+      color: #9A7B3A;
+      margin-bottom: 1.25rem;
+      line-height: 1.65;
+    }
+
+    .verse-block {
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: #7A5A20;
+      line-height: 1.75;
+      max-width: 400px;
+      margin: 0 auto 1.5rem;
+      padding: 1.1rem 1.25rem;
+      background: #FFF8E8;
+      border-radius: 12px;
+      border: 1px solid #EDE5C8;
+    }
+
+    .verse-ref {
+      font-style: normal;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #C4A86A;
+      display: block;
+      margin-top: 0.6rem;
+    }
+
+    .cert-badge-final {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 1px solid #EDE5C8;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #7A5A20;
+      max-width: 400px;
+      text-align: left;
+    }
+
+    .cert-badge-final svg { width: 22px; height: 22px; fill: #E8961A; flex-shrink: 0; }
+
+    @media (max-width: 480px) {
+      .field-row { grid-template-columns: 1fr; }
+      .field-group.full { grid-column: 1; }
+      .star-btn { width: 42px; height: 42px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-geo" style="width:100px;height:100px;top:-35px;right:-25px;border-radius:14px;transform:rotate(20deg);"></div>
+    <div class="hero-geo" style="width:65px;height:65px;bottom:-22px;left:28px;border-radius:10px;transform:rotate(15deg);"></div>
+    <div class="hero-geo" style="width:150px;height:150px;bottom:-90px;right:-45px;border-radius:50%;"></div>
+
+    <div class="org-name">Awana Philippines</div>
+    <h1 id="heroTitle">Awana Child Discipleship<br>Forum 2026</h1>
+    <div class="hero-sub" id="heroSub">Encore &nbsp;·&nbsp; Mindanao &nbsp;·&nbsp; Feedback Form</div>
+
+    <div class="stepper" id="stepper">
+      <div class="step-item">
+        <div class="step-circle active" id="sc0">1</div>
+        <div class="step-name active" id="sn0">You</div>
+      </div>
+      <div class="step-line" id="sl0"><div class="step-line-fill"></div></div>
+      <div class="step-item">
+        <div class="step-circle" id="sc1">2</div>
+        <div class="step-name" id="sn1">Experience</div>
+      </div>
+      <div class="step-line" id="sl1"><div class="step-line-fill"></div></div>
+      <div class="step-item">
+        <div class="step-circle" id="sc2">3</div>
+        <div class="step-name" id="sn2">Sessions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- Page 0: Personal Info -->
+    <div class="page active" id="page0">
+      <div class="section-card card-anim" style="animation-delay:0s;">
+        <div class="page-intro">
+          <div class="page-intro-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#E8961A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="page-heading">Tell us who you are</div>
+          <div class="page-sub">Your name will appear on your certificate of participation.</div>
+        </div>
+
+        <div class="cert-note">
+          <div class="cert-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="cert-note-text">Your name is used to generate your certificate of participation.</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group" id="grp-first">
+            <label class="field-label">First name</label>
+            <input type="text" id="firstName" placeholder="e.g. Maria" autocomplete="given-name">
+            <div class="err">Please enter your first name.</div>
+          </div>
+          <div class="field-group" id="grp-last">
+            <label class="field-label">Last name</label>
+            <input type="text" id="lastName" placeholder="e.g. Santos" autocomplete="family-name">
+            <div class="err">Please enter your last name.</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group full" id="grp-phone">
+            <label class="field-label">Phone number</label>
+            <input type="tel" id="phone" placeholder="e.g. +63 917 123 4567" autocomplete="tel">
+            <div class="err">Please enter your phone number.</div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group full">
+            <label class="field-label">Email address <span class="optional-tag">(optional)</span></label>
+            <input type="email" id="email" placeholder="e.g. maria@email.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-next" onclick="goPage(1)">Continue &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 1: Overall Experience -->
+    <div class="page" id="page1">
+      <div class="section-card card-anim" style="animation-delay:0s;">
+        <div class="s-header">
+          <span class="s-tag">Part 1</span>
+          <span class="s-label">Overall Experience</span>
+        </div>
+        <div class="scale-hint">1 = Strongly Disagree &nbsp;·&nbsp; 5 = Strongly Agree</div>
+
+        <div class="q-wrap" id="wrap-q1">
+          <div class="q-label"><span class="q-num">1</span>I would recommend ACDF to my fellow discipler.</div>
+          <div class="stars" data-q="q1"></div>
+          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
+          <div class="err">Please select a rating.</div>
+        </div>
+        <hr class="divider">
+        <div class="q-wrap" id="wrap-q2">
+          <div class="q-label"><span class="q-num">2</span>My overall experience at the ACDF was positive.</div>
+          <div class="stars" data-q="q2"></div>
+          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
+          <div class="err">Please select a rating.</div>
+        </div>
+        <hr class="divider">
+        <div class="q-wrap" id="wrap-q3">
+          <div class="q-label"><span class="q-num">3</span>The ACDF was well-organized.</div>
+          <div class="stars" data-q="q3"></div>
+          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
+          <div class="err">Please select a rating.</div>
+        </div>
+        <hr class="divider">
+        <div class="q-wrap" id="wrap-q4">
+          <div class="q-label"><span class="q-num">4</span>The sessions provided good interaction and engagement.</div>
+          <div class="stars" data-q="q4"></div>
+          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
+          <div class="err">Please select a rating.</div>
+        </div>
+      </div>
+
+      <div class="section-card card-anim" style="animation-delay:0.08s;">
+        <div class="q-wrap">
+          <div class="q-label"><span class="q-num">5</span>What did you like most about ACDF 2026?</div>
+          <textarea id="q5" placeholder="Share what stood out to you..."></textarea>
+        </div>
+        <hr class="divider">
+        <div class="q-wrap">
+          <div class="q-label"><span class="q-num">6</span>What can we improve for future ACDF?</div>
+          <textarea id="q6" placeholder="Your suggestions help us serve better..."></textarea>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goPage(0)">&larr;</button>
+        <button class="btn-next" onclick="goPage(2)">Next: Sessions &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Page 2: Sessions -->
+    <div class="page" id="page2">
+      <div class="section-card card-anim" style="animation-delay:0s;">
+        <div class="s-header">
+          <span class="s-tag">Part 2</span>
+          <span class="s-label">Plenary &amp; Breakout Sessions</span>
+        </div>
+        <div class="scale-hint">1 = Strongly Disagree &nbsp;·&nbsp; 5 = Strongly Agree</div>
+
+        <div class="q-wrap" id="wrap-q7">
+          <div class="q-label"><span class="q-num">1</span>How would you rate the quality of the plenary session speakers?</div>
+          <div class="stars" data-q="q7"></div>
+          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
+          <div class="err">Please select a rating.</div>
+        </div>
+        <hr class="divider">
+        <div class="q-wrap" id="wrap-q8">
+          <div class="q-label"><span class="q-num">2</span>How would you rate the quality of the breakout session speakers?</div>
+          <div class="stars" data-q="q8"></div>
+          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
+          <div class="err">Please select a rating.</div>
+        </div>
+        <hr class="divider">
+        <div class="q-wrap" id="wrap-q9">
+          <div class="q-label"><span class="q-num">3</span>How would you rate the relevance of the topics discussed?</div>
+          <div class="stars" data-q="q9"></div>
+          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
+          <div class="err">Please select a rating.</div>
+        </div>
+      </div>
+
+      <div class="section-card card-anim" style="animation-delay:0.08s;">
+        <div class="q-wrap">
+          <div class="q-label"><span class="q-num">4</span>Which topics would you like to see covered in future conferences?</div>
+          <textarea id="q10" placeholder="Share your ideas for future sessions..."></textarea>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-back" onclick="goPage(1)">&larr;</button>
+        <button class="btn-next" id="submitBtn" onclick="handleSubmit()">Submit Feedback</button>
+      </div>
+    </div>
+
+    <!-- Success Page -->
+    <div class="page" id="pageSuccess">
+      <div class="section-card card-anim success-wrap" style="animation-delay:0s;">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Thank you so much!</h2>
+        <p class="tagline">Your feedback is a gift that helps ACDF grow<br>and serve disciplers more faithfully.</p>
+        <div class="verse-block">
+          "But as for you, continue in what you have learned and have firmly believed, knowing from whom you learned it."
+          <span class="verse-ref">— 2 Timothy 3:14, ESV</span>
+        </div>
+        <div style="display:flex;justify-content:center;">
+          <div class="cert-badge-final">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span>A certificate of participation will be sent to you for submitting your feedback.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbylz_mrubbLt_YJem1zNY4ennbH9WNDYby1QXrqMh-7Ez8WsE2PFgS-_y46F9A7ohrn/exec';
+    const ratings = {};
+    const pageRatings = { 1: ['q1','q2','q3','q4'], 2: ['q7','q8','q9'] };
+    let cur = 0;
+
+    function buildStars() {
+      document.querySelectorAll('.stars').forEach(container => {
+        const q = container.dataset.q;
+        for (let i = 1; i <= 5; i++) {
+          const btn = document.createElement('button');
+          btn.className = 'star-btn';
+          btn.type = 'button';
+          const num = document.createElement('span');
+          num.textContent = i;
+          const pip = document.createElement('div');
+          pip.className = 'star-pip';
+          btn.appendChild(num);
+          btn.appendChild(pip);
+          btn.onclick = () => selectRating(q, i);
+          container.appendChild(btn);
+        }
+      });
+    }
+
+    function selectRating(q, val) {
+      ratings[q] = val;
+      document.querySelector(`.stars[data-q="${q}"]`).querySelectorAll('.star-btn').forEach((b, i) => {
+        b.classList.toggle('sel', i < val);
+      });
+      const wrap = document.getElementById('wrap-' + q);
+      if (wrap) wrap.classList.remove('show-err');
+    }
+
+    function updateStepper(n) {
+      for (let i = 0; i < 3; i++) {
+        const sc = document.getElementById('sc' + i);
+        const sn = document.getElementById('sn' + i);
+        sc.classList.remove('active', 'done');
+        sn.classList.remove('active', 'done');
+        if (i < n) {
+          sc.classList.add('done');
+          sn.classList.add('done');
+          sc.textContent = '✓';
+        } else if (i === n) {
+          sc.classList.add('active');
+          sn.classList.add('active');
+          sc.textContent = i + 1;
+        } else {
+          sc.textContent = i + 1;
+        }
+      }
+      for (let i = 0; i < 2; i++) {
+        document.getElementById('sl' + i).classList.toggle('done', i < n);
+      }
+    }
+
+    function animatePage(pg) {
+      pg.querySelectorAll('.card-anim').forEach((c, i) => {
+        c.style.animation = 'none';
+        void c.offsetWidth;
+        c.style.animationDelay = (i * 0.08) + 's';
+        c.style.animation = 'cardIn 0.42s cubic-bezier(0.22,1,0.36,1) both';
+      });
+    }
+
+    function goPage(n) {
+      if (n === 1 && cur === 0) {
+        const fn = document.getElementById('firstName').value.trim();
+        const ln = document.getElementById('lastName').value.trim();
+        const ph = document.getElementById('phone').value.trim();
+        document.getElementById('grp-first').classList.toggle('show-err', !fn);
+        document.getElementById('grp-last').classList.toggle('show-err', !ln);
+        document.getElementById('grp-phone').classList.toggle('show-err', !ph);
+        if (!fn || !ln || !ph) return;
+      }
+      if (n === 2 && cur === 1) {
+        let ok = true;
+        pageRatings[1].forEach(q => {
+          if (!ratings[q]) {
+            document.getElementById('wrap-' + q).classList.add('show-err');
+            ok = false;
+          }
+        });
+        if (!ok) {
+          document.querySelector('.show-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+      }
+      document.getElementById('page' + cur).classList.remove('active');
+      cur = n;
+      const pg = document.getElementById('page' + n);
+      pg.classList.add('active');
+      animatePage(pg);
+      updateStepper(n);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleSubmit() {
+      let ok = true;
+      pageRatings[2].forEach(q => {
+        if (!ratings[q]) {
+          document.getElementById('wrap-' + q).classList.add('show-err');
+          ok = false;
+        }
+      });
+      if (!ok) {
+        document.querySelector('.show-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      const payload = {
+        submitted_at:        new Date().toISOString(),
+        firstName:           document.getElementById('firstName').value.trim(),
+        lastName:            document.getElementById('lastName').value.trim(),
+        phone:               document.getElementById('phone').value.trim(),
+        email:               document.getElementById('email').value.trim(),
+        q1_recommend:        ratings.q1,
+        q2_overall_positive: ratings.q2,
+        q3_well_organized:   ratings.q3,
+        q4_engagement:       ratings.q4,
+        q5_liked_most:       document.getElementById('q5').value,
+        q6_improvements:     document.getElementById('q6').value,
+        q7_plenary_quality:  ratings.q7,
+        q8_breakout_quality: ratings.q8,
+        q9_topic_relevance:  ratings.q9,
+        q10_future_topics:   document.getElementById('q10').value
+      };
+
+      fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(() => showSuccess()).catch(() => showSuccess());
+    }
+
+    function showSuccess() {
+      ['page0','page1','page2'].forEach(id => document.getElementById(id).classList.remove('active'));
+      document.getElementById('heroTitle').textContent = 'Thank You!';
+      document.getElementById('heroSub').textContent = 'Belong · Believe · Become';
+      document.getElementById('stepper').innerHTML = '';
+      const s = document.getElementById('pageSuccess');
+      s.classList.add('active');
+      animatePage(s);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    buildStars();
+  </script>
+
+</body>
+</html>
