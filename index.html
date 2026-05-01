@@ -1,922 +1,1772 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ACDF 2026 Feedback Form — Awana Philippines</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: #FDFAF2;
-      min-height: 100vh;
-      color: #2C1A00;
-    }
-
-    .hero {
-      background: #E8961A;
-      padding: 2rem 1.5rem 2.25rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-geo {
-      position: absolute;
-      background: rgba(255,255,255,0.07);
-    }
-
-    .org-name {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 3.5px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 0.4rem;
-    }
-
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.4rem, 4vw, 1.75rem);
-      color: #fff;
-      line-height: 1.2;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-      margin-bottom: 0.25rem;
-    }
-
-    .hero-sub {
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 1.4rem;
-    }
-
-    .stepper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-
-    .step-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      flex: 1;
-    }
-
-    .step-circle {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.45);
-      transition: all 0.35s ease;
-      background: transparent;
-    }
-
-    .step-circle.active {
-      background: rgba(255,255,255,0.2);
-      border-color: #fff;
-      color: #fff;
-      box-shadow: 0 0 0 5px rgba(255,255,255,0.12);
-    }
-
-    .step-circle.done {
-      background: #fff;
-      border-color: #fff;
-      color: #E8961A;
-    }
-
-    .step-name {
-      font-size: 9px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      font-weight: 500;
-      transition: color 0.35s;
-    }
-
-    .step-name.active { color: rgba(255,255,255,0.9); }
-    .step-name.done { color: rgba(255,255,255,0.65); }
-
-    .step-line {
-      flex: 1;
-      height: 1.5px;
-      background: rgba(255,255,255,0.2);
-      margin: 0 6px;
-      margin-bottom: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .step-line-fill {
-      height: 100%;
-      background: #fff;
-      width: 0%;
-      transition: width 0.5s ease;
-    }
-
-    .step-line.done .step-line-fill { width: 100%; }
-
-    .body {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 1.75rem 1.25rem 4rem;
-    }
-
-    .page { display: none; }
-    .page.active { display: block; }
-
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .card-anim { animation: cardIn 0.42s cubic-bezier(0.22,1,0.36,1) both; }
-
-    .section-card {
-      background: #fff;
-      border-radius: 16px;
-      border: 1px solid #EDE5C8;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .section-card:nth-child(2) { animation-delay: 0.07s; }
-    .section-card:nth-child(3) { animation-delay: 0.14s; }
-
-    .s-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 1.1rem;
-      padding-bottom: 0.9rem;
-      border-bottom: 1px solid #F0E8CC;
-    }
-
-    .s-tag {
-      background: #E8961A;
-      color: #fff;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 4px;
-    }
-
-    .s-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      color: #3A2800;
-      font-weight: 600;
-    }
-
-    .scale-hint {
-      font-size: 11px;
-      color: #C47B00;
-      background: #FFF8E8;
-      border: 1px solid #EDE5C8;
-      padding: 5px 11px;
-      border-radius: 6px;
-      margin-bottom: 1.1rem;
-      display: inline-block;
-    }
-
-    .q-wrap { margin-bottom: 1.25rem; }
-    .q-wrap:last-child { margin-bottom: 0; }
-
-    .q-label {
-      font-size: 13.5px;
-      color: #2C1A00;
-      font-weight: 400;
-      margin-bottom: 0.65rem;
-      line-height: 1.55;
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-
-    .q-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #FFF0CC;
-      color: #C47B00;
-      font-size: 10px;
-      font-weight: 600;
-      border-radius: 4px;
-      min-width: 19px;
-      height: 19px;
-      padding: 0 4px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .stars { display: flex; gap: 5px; flex-wrap: wrap; }
-
-    .star-btn {
-      width: 46px;
-      height: 46px;
-      border-radius: 9px;
-      border: 1px solid #EDE5C8;
-      background: #FDFAF2;
-      font-size: 14px;
-      font-weight: 500;
-      color: #C47B00;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: 'DM Sans', sans-serif;
-      gap: 2px;
-    }
-
-    .star-pip {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #EDE5C8;
-      transition: background 0.15s;
-    }
-
-    .star-btn:hover {
-      border-color: #E8961A;
-      background: #FFF5DC;
-      transform: translateY(-2px);
-    }
-
-    .star-btn.sel {
-      background: #E8961A;
-      border-color: #D4841A;
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .star-btn.sel .star-pip { background: rgba(255,255,255,0.45); }
-
-    .scale-ends {
-      display: flex;
-      justify-content: space-between;
-      font-size: 9.5px;
-      color: #C4A86A;
-      margin-top: 4px;
-      letter-spacing: 0.3px;
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px solid #F5EDD5;
-      margin: 1.15rem 0;
-    }
-
-    textarea,
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"] {
-      width: 100%;
-      border: 1px solid #EDE5C8;
-      border-radius: 9px;
-      padding: 10px 13px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: #2C1A00;
-      background: #FDFAF2;
-      outline: none;
-      transition: border 0.2s, background 0.2s, box-shadow 0.2s;
-      -webkit-appearance: none;
-    }
-
-    textarea { min-height: 88px; resize: vertical; }
-
-    textarea:focus,
-    input:focus {
-      border-color: #E8961A;
-      background: #fff;
-      box-shadow: 0 0 0 3px rgba(232,150,26,0.12);
-    }
-
-    textarea::placeholder,
-    input::placeholder { color: #D4C49A; }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .field-group { display: flex; flex-direction: column; gap: 5px; }
-    .field-group.full { grid-column: 1 / -1; }
-
-    .field-label {
-      font-size: 10.5px;
-      font-weight: 600;
-      color: #9A7B3A;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-    }
-
-    .optional-tag {
-      font-size: 10px;
-      font-weight: 400;
-      color: #C4A86A;
-      text-transform: none;
-      letter-spacing: 0;
-    }
-
-    .err {
-      font-size: 11.5px;
-      color: #C0392B;
-      margin-top: 3px;
-      display: none;
-    }
-
-    .show-err .err { display: block; }
-    .show-err input,
-    .show-err textarea { border-color: #E74C3C; }
-
-    .cert-note {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      background: #FDFAF2;
-      border: 1px solid #EDE5C8;
-      border-radius: 10px;
-      padding: 11px 14px;
-      margin-bottom: 1.25rem;
-    }
-
-    .cert-icon-wrap {
-      width: 28px;
-      height: 28px;
-      background: #E8961A;
-      border-radius: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .cert-icon-wrap svg { width: 14px; height: 14px; fill: #fff; }
-
-    .cert-note-text {
-      font-size: 12.5px;
-      color: #7A5A20;
-      line-height: 1.55;
-    }
-
-    .page-intro { text-align: center; margin-bottom: 1.35rem; }
-
-    .page-intro-icon {
-      width: 56px;
-      height: 56px;
-      background: #FFF5DC;
-      border-radius: 14px;
-      margin: 0 auto 0.9rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .page-intro-icon svg { width: 28px; height: 28px; }
-
-    .page-heading {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem;
-      color: #2C1A00;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-
-    .page-sub {
-      font-size: 12.5px;
-      color: #B89050;
-      line-height: 1.55;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 1.15rem;
-    }
-
-    .btn-next {
-      flex: 1;
-      background: #E8961A;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      letter-spacing: 0.2px;
-    }
-
-    .btn-next:hover { background: #D4841A; transform: translateY(-1px); }
-    .btn-next:active { transform: scale(0.98); }
-    .btn-next:disabled { background: #D4C49A; cursor: not-allowed; transform: none; }
-
-    .btn-back {
-      background: #fff;
-      color: #9A7B3A;
-      border: 1px solid #EDE5C8;
-      border-radius: 10px;
-      padding: 14px 20px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 400;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-back:hover {
-      background: #FDFAF2;
-      border-color: #E8961A;
-      color: #C47B00;
-    }
-
-    /* Success */
-    .success-wrap { text-align: center; padding: 2.5rem 1rem; }
-
-    @keyframes checkPop {
-      0%   { transform: scale(0) rotate(-10deg); }
-      70%  { transform: scale(1.12) rotate(2deg); }
-      100% { transform: scale(1) rotate(0); }
-    }
-
-    .success-icon {
-      width: 76px;
-      height: 76px;
-      background: #E8961A;
-      border-radius: 50%;
-      margin: 0 auto 1.35rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: checkPop 0.55s cubic-bezier(0.22,1,0.36,1) 0.1s both;
-    }
-
-    .success-icon svg {
-      width: 36px;
-      height: 36px;
-      fill: none;
-      stroke: #fff;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .success-wrap h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.75rem;
-      color: #2C1A00;
-      margin-bottom: 0.65rem;
-      font-weight: 700;
-    }
-
-    .success-wrap .tagline {
-      font-size: 13.5px;
-      color: #9A7B3A;
-      margin-bottom: 1.25rem;
-      line-height: 1.65;
-    }
-
-    .verse-block {
-      font-style: italic;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      color: #7A5A20;
-      line-height: 1.75;
-      max-width: 400px;
-      margin: 0 auto 1.5rem;
-      padding: 1.1rem 1.25rem;
-      background: #FFF8E8;
-      border-radius: 12px;
-      border: 1px solid #EDE5C8;
-    }
-
-    .verse-ref {
-      font-style: normal;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #C4A86A;
-      display: block;
-      margin-top: 0.6rem;
-    }
-
-    .cert-badge-final {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #fff;
-      border: 1px solid #EDE5C8;
-      border-radius: 12px;
-      padding: 13px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      color: #7A5A20;
-      max-width: 400px;
-      text-align: left;
-    }
-
-    .cert-badge-final svg { width: 22px; height: 22px; fill: #E8961A; flex-shrink: 0; }
-
-    @media (max-width: 480px) {
-      .field-row { grid-template-columns: 1fr; }
-      .field-group.full { grid-column: 1; }
-      .star-btn { width: 42px; height: 42px; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Elah Sayson — AI Automation & Systems Architect | SVAS Philippines</title>
+<meta name="description" content="Elah Sayson is an AI Systems Architect based in the Philippines who designs and builds custom automation systems using n8n, Make, and Zapier for solopreneurs and small teams."/>
+<meta name="keywords" content="AI automation architect, workflow automation Philippines, n8n expert, Make automation, Zapier specialist, systems architect, business automation, AI workflow builder"/>
+<meta property="og:title" content="Elah Sayson — AI Automation & Systems Architect | SVAS"/>
+<meta property="og:description" content="I design and build automation systems that eliminate manual work for solopreneurs and small teams. n8n, Make, Zapier, and AI agents."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://svasph.com"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://svasph.com"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Elah Sayson",
+  "brand": {
+    "@type": "Brand",
+    "name": "Sayson Virtual Assistance Services"
+  },
+  "jobTitle": "AI Systems Architect",
+  "description": "Elah Sayson is an AI Systems Architect based in the Philippines who builds custom workflow automation systems using n8n, Make, Zapier, and AI agents for solopreneurs and small teams.",
+  "url": "https://svasph.com",
+  "sameAs": [
+    "https://www.linkedin.com/in/elah-mae-sayson-pm42024/",
+    "https://www.upwork.com/freelancers/~011ab79f1fcdcad0da"
+  ],
+  "knowsAbout": ["Workflow Automation", "n8n", "Make", "Zapier", "AI Agents", "Systems Architecture", "Business Process Automation"],
+  "areaServed": "Worldwide",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "PH"
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0a0a0a;
+  --surface:#111111;
+  --card:#181818;
+  --card-hover:#1e1e1e;
+  --border:#252525;
+  --border-bright:#333333;
+  --green:#3aaa35;
+  --green-dim:#2a8a26;
+  --green-glow:rgba(58,170,53,0.12);
+  --green-glow-strong:rgba(58,170,53,0.22);
+  --white:#ffffff;
+  --text-primary:#f0f0f0;
+  --text-secondary:#888888;
+  --text-muted:#555555;
+  --font-display:'Syne',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --radius-sm:8px;
+  --radius-md:14px;
+  --radius-lg:20px;
+  --radius-xl:28px;
+  --radius-pill:9999px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--text-primary);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ─── PICF DIAGRAM ──────────── */
+.workflow-canvas{
+  width:100%;max-width:400px;
+  animation:fadeUp .8s .5s ease both;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  height:100%;
+}
+.picf-diagram{
+  display:flex;flex-direction:column;align-items:stretch;gap:0;
+  justify-content:center;
+  height:100%;
+}
+.pd-node{
+  display:flex;align-items:center;gap:1rem;
+  background:#181818;
+  border:1px solid #252525;
+  border-radius:16px;
+  padding:.8rem 1.2rem;
+  position:relative;
+  transition:border-color .4s,box-shadow .4s,background .4s;
+}
+.pd-node--large{padding:.9rem 1.2rem;}
+.pd-node--output{
+  background:#0f2e0f;
+  border-color:#2a7a28;
+}
+.pd-node.active{
+  border-color:#3aaa35;
+  box-shadow:0 0 24px rgba(58,170,53,.2);
+  background:#111f11;
+}
+.pd-node--output.active{
+  border-color:#3aaa35;
+  box-shadow:0 0 32px rgba(58,170,53,.35);
+  background:#1a4a19;
+}
+.pd-letter{
+  width:40px;height:40px;min-width:40px;
+  background:linear-gradient(135deg,#3aaa35,#1a6e17);
+  color:#fff;
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:1.2rem;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  opacity:.3;
+  transition:opacity .4s,box-shadow .4s;
+}
+.pd-letter--check{font-size:1.1rem;}
+.pd-node.active .pd-letter{opacity:1;box-shadow:0 0 14px rgba(58,170,53,.5);}
+.pd-tag{
+  font-weight:700;
+  font-size:.9rem;
+  color:#f0f0f0;
+  margin-bottom:2px;
+  opacity:.4;
+  transition:opacity .4s;
+}
+.pd-sub{
+  font-size:.78rem;
+  color:#555;
+  transition:color .4s;
+}
+.pd-node.active .pd-tag{opacity:1;}
+.pd-node.active .pd-sub{color:#888;}
+
+/* connector */
+.pd-connector{
+  display:flex;justify-content:center;
+  padding:2px 0;
+  position:relative;
+}
+.pd-line{
+  width:2px;height:24px;
+  background:#1e1e1e;
+  border-radius:1px;
+  position:relative;
+  overflow:hidden;
+}
+.pd-dot{
+  width:2px;height:12px;
+  background:linear-gradient(to bottom,transparent,#3aaa35,transparent);
+  border-radius:1px;
+  position:absolute;
+  top:-12px;
+  transition:none;
+}
+.pd-connector.active .pd-line{background:#2a4a2a;}
+.pd-connector.active .pd-dot{
+  animation:dotFlow .6s ease forwards;
+}
+@keyframes dotFlow{
+  from{top:-12px;opacity:0;}
+  20%{opacity:1;}
+  to{top:36px;opacity:0;}
+}
+
+/* ─── SCROLLBAR ─────────────────── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--border-bright);border-radius:2px}
+
+/* ─── NAV ─────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px max(5%, calc((100% - 1200px) / 2));
+  background:rgba(10,10,10,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:padding .3s ease;
+}
+.nav-logo{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:1.1rem;
+  letter-spacing:-.02em;
+  color:var(--white);
+  text-decoration:none;
+}
+.nav-logo span{color:var(--green)}
+.nav-links{display:flex;align-items:center;gap:2rem}
+.nav-links a{
+  font-size:.85rem;
+  font-weight:500;
+  color:var(--text-secondary);
+  text-decoration:none;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{
+  background:linear-gradient(135deg,#3aaa35,#1a6e17);
+  color:#fff;
+  font-family:var(--font-body);
+  font-size:.82rem;
+  font-weight:600;
+  padding:10px 22px;
+  border-radius:var(--radius-pill);
+  text-decoration:none;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  transition:transform .2s,box-shadow .2s;
+}
+.nav-cta:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(58,170,53,.4)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:22px;height:2px;background:var(--text-primary);border-radius:1px;transition:.3s}
+
+/* ─── HERO ────────────────────── */
+#hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:stretch;
+  gap:2rem;
+  padding:100px max(5%, calc((100% - 1200px) / 2)) 60px;
+  position:relative;overflow:hidden;
+}
+.hero-left{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;}
+.hero-right{display:flex;align-items:center;justify-content:center;position:relative;align-self:center;}
+.hero-bg-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(58,170,53,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(58,170,53,.03) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-bg-glow{
+  position:absolute;top:-20%;right:-10%;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(58,170,53,.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-bg-glow2{
+  position:absolute;bottom:-10%;left:-5%;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(58,170,53,.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(58,170,53,.08);
+  border:1px solid rgba(58,170,53,.2);
+  border-radius:var(--radius-pill);
+  padding:6px 16px 6px 10px;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--green);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:1.5rem;
+  animation:fadeUp .8s ease both;
+}
+.hero-badge-dot{
+  width:7px;height:7px;
+  background:linear-gradient(135deg,#3aaa35,#1a6e17);
+  border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-headline{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(2.2rem,4.5vw,4.2rem);
+  line-height:.88;
+  letter-spacing:-.03em;
+  color:var(--white);
+  max-width:900px;
+  margin-bottom:1.5rem;
+  animation:fadeUp .8s .1s ease both;
+}
+.hero-headline .accent{
+  background:linear-gradient(135deg,#3aaa35 0%,#1a6e17 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-headline .line2{display:block;color:var(--text-secondary)}
+.hero-sub{
+  font-size:clamp(1rem,1.8vw,1.2rem);
+  font-weight:400;
+  color:var(--text-secondary);
+  max-width:540px;
+  line-height:1.75;
+  margin-bottom:2rem;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-actions{
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  animation:fadeUp .8s .3s ease both;
+}
+.btn-primary{
+  background:linear-gradient(135deg,#3aaa35,#1a6e17);
+  color:#fff;
+  font-family:var(--font-body);
+  font-size:.9rem;
+  font-weight:600;
+  padding:14px 30px;
+  border-radius:var(--radius-pill);
+  text-decoration:none;
+  letter-spacing:.03em;
+  transition:transform .2s,box-shadow .2s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 0 28px rgba(58,170,53,.5)}
+.btn-secondary{
+  background:transparent;
+  color:var(--text-primary);
+  font-family:var(--font-body);
+  font-size:.9rem;
+  font-weight:500;
+  padding:14px 30px;
+  border-radius:var(--radius-pill);
+  border:1px solid var(--border-bright);
+  text-decoration:none;
+  transition:border-color .2s,color .2s;
+}
+.btn-secondary:hover{border-color:var(--green);color:var(--green)}
+.hero-stats{
+  display:flex;gap:2.5rem;margin-top:2.5rem;padding-top:2rem;
+  border-top:1px solid var(--border);
+  animation:fadeUp .8s .4s ease both;
+}
+
+.hero-stat-num span{color:var(--green)}
+
+
+.hero-scroll span{font-size:.7rem;color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase}
+
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── SECTIONS COMMON ────── */
+section{padding:100px max(5%, calc((100% - 1200px) / 2))}
+.container{max-width:1200px;margin:0 auto;width:100%}
+.section-label{
+  font-size:.75rem;
+  font-weight:600;
+  color:#3aaa35;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:1.2rem;
+}
+.section-title{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(2rem,4.5vw,3.5rem);
+  letter-spacing:-.03em;
+  line-height:.95;
+  color:var(--white);
+  margin-bottom:1.5rem;
+}
+.section-desc{
+  font-size:1.05rem;
+  color:var(--text-secondary);
+  max-width:540px;
+  line-height:1.8;
+}
+/* ─── ABOUT LAYOUT ──────────── */
+#about{background:var(--surface);position:relative;overflow:hidden}
+.about-headline-row{margin-bottom:3rem;}
+.about-body{
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:5rem;
+  align-items:flex-start;
+}
+.about-bio-col{}
+.about-right-col{display:flex;flex-direction:column;gap:1rem;}
+.about-tools-row{margin-top:.5rem;}
+.about-tools-label{
+  font-size:.72rem;font-weight:600;color:var(--text-muted);
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:.8rem;
+}
+.tools-grid{display:flex;flex-wrap:wrap;gap:.5rem}
+.tool-chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-pill);
+  padding:5px 12px;
+  font-size:.78rem;
+  font-weight:500;
+  color:var(--text-secondary);
+  transition:border-color .2s,color .2s;
+}
+.tool-chip:hover{border-color:var(--green);color:var(--green)}
+@media(max-width:900px){
+  .about-body{grid-template-columns:1fr;}
+  .about-headline-row{margin-bottom:2rem;}
+}
+
+/* ─── DIVIDER ──────────────── */
+.divider{
+  width:100%;height:1px;
+  background:linear-gradient(to right,transparent,var(--border),transparent);
+}
+
+
+.about-image-wrap{position:relative}
+.about-image-frame{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-xl);
+  aspect-ratio:3/4;
+  overflow:hidden;
+  position:relative;
+}
+.about-image-placeholder{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1rem;
+  color:var(--text-muted);
+  font-size:.85rem;
+}
+.about-image-placeholder .placeholder-icon{
+  width:60px;height:60px;
+  border:2px dashed var(--border-bright);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;
+}
+.about-tag{
+  position:absolute;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:12px 16px;
+  font-size:.8rem;
+}
+.about-tag-role{bottom:-20px;right:-20px;min-width:180px}
+.about-tag-role .tag-title{font-weight:700;color:var(--white);margin-bottom:2px}
+.about-tag-role .tag-sub{color:var(--green);font-size:.75rem}
+.about-tag-team{top:20px;left:-20px;display:flex;align-items:center;gap:10px}
+.about-tag-team .tag-num{
+  font-family:var(--font-display);font-weight:800;font-size:1.6rem;color:var(--green);
+}
+.about-tag-team .tag-sub{color:var(--text-secondary);font-size:.75rem;line-height:1.3}
+
+.about-content{}
+.about-roles{display:flex;flex-direction:column;gap:1rem;margin:2.5rem 0}
+.about-role-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:1.2rem 1.5rem;
+  display:flex;align-items:flex-start;gap:1rem;
+  transition:transform .35s cubic-bezier(.4,0,.2,1), border-color .3s, box-shadow .3s, background .3s;
+  cursor:default;
+  position:relative;
+  z-index:1;
+  transform-origin:center center;
+}
+.about-role-card:hover{
+  border-color:rgba(58,170,53,.5);
+  background:linear-gradient(135deg,#181818 0%,#1a2a1a 100%);
+  box-shadow:0 12px 40px rgba(58,170,53,.15), 0 0 0 1px rgba(58,170,53,.2);
+  transform:scale(1.04);
+  z-index:2;
+}
+.about-role-card .about-role-icon{
+  transition:transform .35s cubic-bezier(.4,0,.2,1), background .3s, border-color .3s;
+}
+.about-role-card:hover .about-role-icon{
+  transform:scale(1.1) rotate(-3deg);
+  background:rgba(58,170,53,.15);
+  border-color:rgba(58,170,53,.4);
+}
+.about-role-card:hover .about-role-title{color:#fff;}
+.about-role-card:hover .about-role-sub{color:rgba(255,255,255,.8);}
+.about-role-title{transition:color .3s;}
+.about-role-sub{transition:color .3s;}
+.about-role-icon{
+  width:40px;height:40px;min-width:40px;
+  background:var(--green-glow);
+  border:1px solid rgba(58,170,53,.2);
+  border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.about-role-title{font-weight:600;color:var(--white);margin-bottom:3px;font-size:.95rem}
+.about-role-sub{font-size:.83rem;color:var(--text-secondary)}
+.about-tools{margin-top:2rem}
+.about-tools-label{font-size:.78rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.tools-grid{display:flex;flex-wrap:wrap;gap:.6rem}
+.tool-chip{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-pill);
+  padding:6px 14px;
+  font-size:.8rem;
+  font-weight:500;
+  color:var(--text-secondary);
+  transition:border-color .2s,color .2s;
+}
+.tool-chip:hover{border-color:var(--green);color:var(--green)}
+
+/* ─── SYSTEMS ─────────────── */
+#systems{position:relative;overflow:hidden}
+.systems-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:4rem;flex-wrap:wrap;gap:2rem;
+}
+.systems-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1.5rem;
+}
+
+/* FLIP CARDS */
+.flip-card{
+  height:320px;
+  perspective:1000px;
+  cursor:pointer;
+  outline:none;
+}
+.flip-inner{
+  position:relative;
+  width:100%;height:100%;
+  transform-style:preserve-3d;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+  border-radius:var(--radius-lg);
+}
+.flip-card:hover .flip-inner,
+.flip-card:focus .flip-inner,
+.flip-card.flipped .flip-inner{
+  transform:rotateY(180deg);
+}
+.flip-front,
+.flip-back{
+  position:absolute;inset:0;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  border-radius:var(--radius-lg);
+  display:flex;flex-direction:column;
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.flip-front{
+  background:var(--card);
+  padding:1.8rem;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+.flip-back{
+  background:#080f08;
+  border-color:rgba(58,170,53,.3);
+  transform:rotateY(180deg);
+  justify-content:flex-end;
+  padding:0;
+}
+
+/* Media area (image or video) */
+.flip-media{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  border-radius:var(--radius-lg);
+  opacity:.85;
+  transition:opacity .3s;
+}
+.flip-card:hover .flip-media{opacity:1;}
+.flip-media-loom{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  border:none;
+  border-radius:var(--radius-lg);
+}
+.flip-media-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.8rem;
+  background:linear-gradient(135deg,#0a180a,#111f11);
+}
+.flip-media-placeholder-icon{
+  width:52px;height:52px;
+  border:2px dashed rgba(58,170,53,.3);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;
+}
+.flip-media-placeholder p{
+  font-size:.75rem;
+  color:var(--text-muted);
+  text-align:center;
+  line-height:1.5;
+}
+.flip-media-placeholder .upload-options{
+  display:flex;gap:.5rem;margin-top:.3rem;
+}
+.flip-media-placeholder .upload-opt{
+  background:rgba(58,170,53,.1);
+  border:1px solid rgba(58,170,53,.2);
+  border-radius:var(--radius-pill);
+  padding:3px 10px;
+  font-size:.68rem;
+  color:var(--green);
+  font-weight:600;
+}
+
+/* Info overlay at the bottom of back */
+.flip-back-overlay{
+  position:relative;z-index:2;
+  background:linear-gradient(to top, rgba(5,15,5,.97) 0%, rgba(5,15,5,.92) 60%, transparent 100%);
+  padding:1.4rem 1.4rem 1.2rem;
+  border-radius:0 0 var(--radius-lg) var(--radius-lg);
+}
+.flip-num{
+  font-size:.7rem;
+  font-weight:700;
+  color:var(--green);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+.flip-icon{
+  font-size:2.2rem;
+  margin:auto 0;
+}
+.flip-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:1rem;
+  color:var(--white);
+  line-height:1.3;
+}
+.flip-hint{
+  font-size:.72rem;
+  color:var(--text-muted);
+  letter-spacing:.05em;
+  margin-top:.5rem;
+}
+.flip-back-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:.88rem;
+  color:#ffffff;
+  line-height:1.3;
+  margin-bottom:.4rem;
+}
+.flip-desc{
+  font-size:.78rem;
+  color:rgba(255,255,255,.65);
+  line-height:1.6;
+}
+.flip-tags{
+  display:flex;flex-wrap:wrap;gap:.35rem;
+  margin-top:.7rem;
+}
+.flip-upload{
+  font-size:.68rem;
+  color:var(--text-muted);
+  margin-top:.5rem;
+  font-style:italic;
+}
+
+/* ─── SERVICES ─────────────── */
+#services{background:var(--surface);padding-top:80px;padding-bottom:80px;}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+  margin-top:0;
+}
+.service-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:2rem;
+  transition:transform .3s,border-color .3s;
+}
+.service-card:hover{transform:translateY(-4px);border-color:rgba(58,170,53,.25)}
+.service-card.featured{
+  border-color:rgba(58,170,53,.3);
+  background:linear-gradient(135deg,var(--card) 0%,rgba(58,170,53,.04) 100%);
+}
+.service-icon{
+  width:48px;height:48px;
+  background:var(--green-glow);
+  border:1px solid rgba(58,170,53,.2);
+  border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;
+  margin-bottom:1.5rem;
+}
+.service-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:1.1rem;
+  color:var(--white);
+  margin-bottom:.7rem;
+}
+.service-desc{
+  font-size:.88rem;
+  color:var(--text-secondary);
+  line-height:1.7;
+  margin-bottom:1.5rem;
+}
+.service-list{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.service-list li{
+  font-size:.82rem;
+  color:var(--text-secondary);
+  display:flex;align-items:flex-start;gap:.5rem;
+  padding-left:0;
+}
+.service-list li::before{
+  content:'→';
+  color:var(--green);
+  font-size:.75rem;
+  margin-top:2px;
+  flex-shrink:0;
+}
+.service-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,#3aaa35,#1a6e17);
+  color:#fff;
+  font-size:.65rem;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:3px 10px;
+  border-radius:var(--radius-pill);
+  margin-bottom:1rem;
+}
+
+/* ─── CONTACT ─────────────── */
+#contact{position:relative;overflow:hidden}
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:6rem;align-items:flex-start}
+.contact-info{padding-top:.5rem}
+.contact-links{display:flex;flex-direction:column;gap:.4rem;margin-top:1.5rem}
+.contact-link{
+  display:flex;align-items:center;gap:1rem;
+  color:var(--text-secondary);
+  text-decoration:none;
+  font-size:.9rem;
+  transition:color .2s;
+  padding:.55rem 0;
+  border-bottom:1px solid var(--border);
+}
+.contact-link:hover{color:var(--green)}
+.contact-link-icon{
+  width:38px;height:38px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+  flex-shrink:0;
+}
+.contact-form{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-xl);
+  padding:1.4rem;
+}
+.form-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:1.2rem;
+  color:var(--white);
+  margin-bottom:.3rem;
+}
+.form-sub{
+  font-size:.83rem;
+  color:var(--text-secondary);
+  margin-bottom:.9rem;
+  line-height:1.5;
+}
+.form-group{margin-bottom:.6rem}
+.form-label{
+  display:block;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--text-secondary);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  margin-bottom:.5rem;
+}
+.form-input,
+.form-select,
+.form-textarea{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:9px 14px;
+  font-family:var(--font-body);
+  font-size:.88rem;
+  color:var(--text-primary);
+  outline:none;
+  transition:border-color .2s;
+  appearance:none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus{border-color:rgba(58,170,53,.5)}
+.form-textarea{resize:vertical;min-height:52px;line-height:1.6}
+.form-select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.submit-btn{
+  width:100%;
+  background:linear-gradient(135deg,#3aaa35,#1a6e17);
+  color:#fff;
+  font-family:var(--font-body);
+  font-size:.88rem;
+  font-weight:700;
+  padding:11px 24px;
+  border-radius:var(--radius-pill);
+  border:none;
+  cursor:pointer;
+  letter-spacing:.03em;
+  margin-top:.4rem;
+  transition:transform .2s,box-shadow .2s;
+}
+.submit-btn:hover{transform:scale(1.02);box-shadow:0 0 24px rgba(58,170,53,.35)}
+.picf-block{
+  margin-bottom:.7rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  transition:border-color .2s;
+}
+.picf-block:focus-within{border-color:rgba(58,170,53,.4);}
+.picf-label{
+  display:flex;align-items:center;gap:.7rem;
+  padding:.45rem 1rem .4rem;
+  border-bottom:1px solid var(--border);
+}
+.picf-letter{
+  width:22px;height:22px;min-width:22px;
+  background:linear-gradient(135deg,#3aaa35,#1a6e17);
+  color:#fff;
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:.78rem;
+  border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+  line-height:1;
+}
+.picf-title{
+  font-weight:700;
+  font-size:.82rem;
+  color:var(--text-primary);
+}
+.picf-hint{
+  font-size:.74rem;
+  color:var(--text-muted);
+  margin-left:auto;
+  text-align:right;
+  line-height:1.2;
+}
+.picf-block .form-textarea{
+  border:none;
+  border-radius:0;
+  background:transparent;
+  padding:.45rem 1rem;
+  font-size:.85rem;
+}
+.picf-block .form-textarea:focus{border:none;outline:none;}
+.form-note{
+  font-size:.75rem;
+  color:var(--text-muted);
+  text-align:center;
+  margin-top:1rem;
+  line-height:1.5;
+}
+
+/* ─── FOOTER ─────────────── */
+footer{
+  border-top:1px solid var(--border);
+  padding:40px max(5%, calc((100% - 1200px) / 2));
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1.5rem;
+}
+.footer-logo{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:1rem;
+  color:var(--white);
+  text-decoration:none;
+}
+.footer-logo span{color:var(--green)}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-links a{
+  font-size:.82rem;
+  color:var(--text-muted);
+  text-decoration:none;
+  transition:color .2s;
+}
+.footer-links a:hover{color:var(--green)}
+.footer-copy{
+  font-size:.8rem;
+  color:var(--text-muted);
+}
+
+/* ─── MOBILE NAV ─────────── */
+.mobile-nav{
+  position:fixed;inset:0;z-index:99;
+  background:rgba(10,10,10,.97);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2.5rem;
+  transform:translateX(100%);
+  transition:transform .3s ease;
+}
+.mobile-nav.open{transform:translateX(0)}
+.mobile-nav a{
+  font-family:var(--font-display);
+  font-size:2rem;
+  font-weight:700;
+  color:var(--white);
+  text-decoration:none;
+  letter-spacing:-.02em;
+}
+.mobile-nav a:hover{color:var(--green)}
+
+/* ─── RESPONSIVE ─────────── */
+/* ─── TABLET (≤900px) ───────── */
+@media(max-width:900px){
+  .contact-grid{grid-template-columns:1fr}
+  .hero-stats{gap:2rem}
+  .systems-header{flex-direction:column;align-items:flex-start}
+  .form-row{grid-template-columns:1fr}
+  .about-body{grid-template-columns:1fr;gap:3rem}
+  .about-headline-row{margin-bottom:2rem}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .systems-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ─── MOBILE (≤768px) ─────── */
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  section{padding:60px 5%}
+  #hero{
+    grid-template-columns:1fr;
+    padding-top:90px;
+    padding-bottom:60px;
+    min-height:auto;
+  }
+  .hero-left{align-items:flex-start}
+  .hero-right{display:none}
+  .hero-headline{font-size:clamp(2.2rem,10vw,3.5rem);line-height:.92}
+  .hero-sub{font-size:.95rem}
+  .hero-stats{
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:1.2rem;
+    margin-top:2rem;
+    padding-top:1.5rem;
+  }
+  
+  .hero-badge{font-size:.7rem;padding:5px 12px 5px 8px}
+  .hero-actions{flex-direction:column;align-items:flex-start;gap:.8rem}
+  .btn-primary,.btn-secondary{width:100%;justify-content:center;text-align:center}
+  .section-title{font-size:clamp(1.8rem,8vw,2.8rem)}
+  .services-grid{grid-template-columns:1fr}
+  .systems-grid{grid-template-columns:1fr}
+  .flip-card{height:240px}
+  .about-roles{gap:.8rem}
+  .about-role-card{padding:1rem 1.2rem}
+  .contact-form{padding:1.2rem}
+  .picf-label{flex-wrap:wrap;gap:.4rem}
+  .picf-hint{margin-left:0;text-align:left}
+  .n8n-canvas{gap:.5rem}
+  
+  footer{flex-direction:column;align-items:flex-start;gap:1rem;padding:30px 5%}
+  .footer-links{gap:1rem;flex-wrap:wrap}
+  .mobile-nav a{font-size:1.6rem}
+}
+
+/* ─── SMALL MOBILE (≤400px) ── */
+@media(max-width:400px){
+  .hero-headline{font-size:2rem}
+  .hero-stats{flex-direction:column;gap:1rem}
+  .flip-card{height:220px}
+  .contact-grid{gap:2rem}
+}
+</style>
 </head>
 <body>
 
-  <div class="hero">
-    <div class="hero-geo" style="width:100px;height:100px;top:-35px;right:-25px;border-radius:14px;transform:rotate(20deg);"></div>
-    <div class="hero-geo" style="width:65px;height:65px;bottom:-22px;left:28px;border-radius:10px;transform:rotate(15deg);"></div>
-    <div class="hero-geo" style="width:150px;height:150px;bottom:-90px;right:-45px;border-radius:50%;"></div>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo"><img src="6.png" alt="SVAS Logo" style="height:32px;width:auto;vertical-align:middle;margin-right:8px;"/>SVAS<span>.</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#systems">Systems</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Let's Talk →</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-    <div class="org-name">Awana Philippines</div>
-    <h1 id="heroTitle">Awana Child Discipleship<br>Forum 2026</h1>
-    <div class="hero-sub" id="heroSub">Encore &nbsp;·&nbsp; Mindanao &nbsp;·&nbsp; Feedback Form</div>
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#systems" onclick="closeMobileNav()">Systems</a>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+  <a href="#contact" class="nav-cta" onclick="closeMobileNav()">Let's Talk →</a>
+</div>
 
-    <div class="stepper" id="stepper">
-      <div class="step-item">
-        <div class="step-circle active" id="sc0">1</div>
-        <div class="step-name active" id="sn0">You</div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-glow"></div>
+  <div class="hero-bg-glow2"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Available for automation projects
+    </div>
+
+    <h1 class="hero-headline">
+      I build systems<br>
+      <span class="accent">that run</span><br>
+      <span class="line2">while you scale.</span>
+    </h1>
+    <!-- SEO context anchor -->
+    <p style="position:absolute;opacity:0;pointer-events:none;font-size:0">AI automation systems architect Philippines — n8n Make Zapier workflow automation for small teams and solopreneurs</p>
+
+    <p class="hero-sub">
+      Elah Sayson is an AI Systems Architect based in the Philippines who designs and builds custom workflow automation systems using n8n, Make, and Zapier. She helps solopreneurs and small teams eliminate manual tasks, reduce operational costs, and scale without hiring.
+    </p>
+
+    <p style="font-size:.78rem;color:var(--text-muted);margin-bottom:2rem;letter-spacing:.01em">
+      Operating as <strong style="color:var(--text-secondary);font-weight:600">Sayson Virtual Assistance Services (SVAS)</strong>
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Describe Your Problem →</a>
+      <a href="#systems" class="btn-secondary">See My Builds</a>
+    </div>
+  </div><!-- end hero-left -->
+
+  <div class="hero-right">
+    <div class="workflow-canvas">
+      <div class="picf-diagram">
+
+        <div class="pd-node pd-node--large" id="pd-p">
+          <div class="pd-letter">P</div>
+          <div class="pd-info">
+            <div class="pd-tag">Problem</div>
+            <div class="pd-sub">What's slowing you down?</div>
+          </div>
+        </div>
+
+        <div class="pd-connector" id="pd-conn-pi">
+          <div class="pd-line"><div class="pd-dot" id="dot-pi"></div></div>
+        </div>
+
+        <div class="pd-node" id="pd-i">
+          <div class="pd-letter">I</div>
+          <div class="pd-info">
+            <div class="pd-tag">Information</div>
+            <div class="pd-sub">Your business context</div>
+          </div>
+        </div>
+
+        <div class="pd-connector" id="pd-conn-ic">
+          <div class="pd-line"><div class="pd-dot" id="dot-ic"></div></div>
+        </div>
+
+        <div class="pd-node" id="pd-c">
+          <div class="pd-letter">C</div>
+          <div class="pd-info">
+            <div class="pd-tag">Current Tools</div>
+            <div class="pd-sub">Stack you're working with</div>
+          </div>
+        </div>
+
+        <div class="pd-connector" id="pd-conn-cf">
+          <div class="pd-line"><div class="pd-dot" id="dot-cf"></div></div>
+        </div>
+
+        <div class="pd-node" id="pd-f">
+          <div class="pd-letter">F</div>
+          <div class="pd-info">
+            <div class="pd-tag">Final Goal</div>
+            <div class="pd-sub">What success looks like</div>
+          </div>
+        </div>
+
+        <div class="pd-connector" id="pd-conn-out">
+          <div class="pd-line"><div class="pd-dot" id="dot-out"></div></div>
+        </div>
+
+        <div class="pd-node pd-node--output" id="pd-out">
+          <div class="pd-letter pd-letter--check">✓</div>
+          <div class="pd-info">
+            <div class="pd-tag">Elah takes over</div>
+            <div class="pd-sub">System designed & built</div>
+          </div>
+        </div>
+
       </div>
-      <div class="step-line" id="sl0"><div class="step-line-fill"></div></div>
-      <div class="step-item">
-        <div class="step-circle" id="sc1">2</div>
-        <div class="step-name" id="sn1">Experience</div>
+    </div>
+  </div><!-- end hero-right -->
+</div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-headline-row">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Built from ops.<br>Wired for systems.</h2>
+  </div>
+
+  <div class="about-body">
+    <div class="about-bio-col">
+      <p class="section-desc">
+        Elah Sayson is a Philippines-based AI Systems Architect who specializes in building custom workflow automation systems for solopreneurs and small teams. With 6+ years of hands-on operations experience, she bridges the gap between business process knowledge and technical automation — designing systems that actually work in the real world.
+      </p>
+      <p style="margin-top:1rem;color:var(--text-secondary);font-size:.95rem;line-height:1.85">
+        Her background started in virtual assistance — managing operations, communications, and execution for growing businesses. Over time, she recognized a pattern: the same bottlenecks appeared everywhere. Manual data entry, broken handoffs, repetitive tasks consuming hours that should have been automated. Instead of patching symptoms, she learned to eliminate them permanently through intelligent system design.
+      </p>
+      <p style="margin-top:1rem;color:var(--text-secondary);font-size:.95rem;line-height:1.85">
+        Today, Elah architects automation systems using n8n, Make, and Zapier — integrated with AI agents where intelligent decision-making is needed. Her work spans hiring systems, invoice processing, payroll automation, CRM workflows, inventory monitoring, and more. Every system is built for a real business problem and deployed in production.
+      </p>
+    </div>
+
+    <div class="about-right-col">
+      <div class="about-role-card">
+        <div class="about-role-icon">⚙️</div>
+        <div>
+          <div class="about-role-title">AI Workflow Automation</div>
+          <div class="about-role-sub">Custom automation systems built with n8n, Make, and Zapier — integrated with AI agents for intelligent, self-running workflows</div>
+        </div>
       </div>
-      <div class="step-line" id="sl1"><div class="step-line-fill"></div></div>
-      <div class="step-item">
-        <div class="step-circle" id="sc2">3</div>
-        <div class="step-name" id="sn2">Sessions</div>
+      <div class="about-role-card">
+        <div class="about-role-icon">🧱</div>
+        <div>
+          <div class="about-role-title">Systems Architecture</div>
+          <div class="about-role-sub">End-to-end process design — mapping workflows, identifying automation opportunities, and building systems that scale without adding headcount</div>
+        </div>
+      </div>
+      <div class="about-role-card">
+        <div class="about-role-icon">📍</div>
+        <div>
+          <div class="about-role-title">Based in the Philippines</div>
+          <div class="about-role-sub">Working with clients globally — solopreneurs, startups, and small teams who need real operational leverage, not just more hours</div>
+        </div>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="body">
+<!-- DIVIDER -->
+<div class="divider"></div>
 
-    <!-- Page 0: Personal Info -->
-    <div class="page active" id="page0">
-      <div class="section-card card-anim" style="animation-delay:0s;">
-        <div class="page-intro">
-          <div class="page-intro-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#E8961A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-          </div>
-          <div class="page-heading">Tell us who you are</div>
-          <div class="page-sub">Your name will appear on your certificate of participation.</div>
+<!-- SYSTEMS / BUILDS -->
+<section id="systems">
+  <div class="systems-header">
+    <div>
+      <div class="section-label">Automation Portfolio</div>
+      <h2 class="section-title">Automation systems<br>built & deployed.</h2>
+    </div>
+    <p style="max-width:340px;color:var(--text-secondary);font-size:.95rem;line-height:1.75">
+      Every automation system below was custom-built for a real operational problem — not a template, not a demo. Each one is live, running, and saving hours every week.
+    </p>
+  </div>
+
+  <div class="systems-grid">
+
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">01</div>
+          <div class="flip-icon">🧠</div>
+          <div class="flip-title">AI Hiring Filter & Candidate Evaluator</div>
+          <div class="flip-hint">Tap to see details</div>
         </div>
-
-        <div class="cert-note">
-          <div class="cert-icon-wrap">
-            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-01.jpg" alt="AI Hiring Filter & Candidate Evaluator"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">🧠</div>
+            <p>Add a screenshot or Loom<br>for System 01</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
           </div>
-          <div class="cert-note-text">Your name is used to generate your certificate of participation.</div>
-        </div>
-
-        <div class="field-row">
-          <div class="field-group" id="grp-first">
-            <label class="field-label">First name</label>
-            <input type="text" id="firstName" placeholder="e.g. Maria" autocomplete="given-name">
-            <div class="err">Please enter your first name.</div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">01</div>
+            <div class="flip-back-title">AI Hiring Filter & Candidate Evaluator</div>
+            <div class="flip-desc">CV scanning, AI evaluation, strengths/weaknesses analysis, and multi-channel candidate notifications.</div>
+            <div class="flip-tags"><span class="system-tag">n8n</span><span class="system-tag">AI Agent</span><span class="system-tag">Email/SMS</span><span class="system-tag">HR</span></div>
           </div>
-          <div class="field-group" id="grp-last">
-            <label class="field-label">Last name</label>
-            <input type="text" id="lastName" placeholder="e.g. Santos" autocomplete="family-name">
-            <div class="err">Please enter your last name.</div>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <div class="field-group full" id="grp-phone">
-            <label class="field-label">Phone number</label>
-            <input type="tel" id="phone" placeholder="e.g. +63 917 123 4567" autocomplete="tel">
-            <div class="err">Please enter your phone number.</div>
-          </div>
-        </div>
-
-        <div class="field-row">
-          <div class="field-group full">
-            <label class="field-label">Email address <span class="optional-tag">(optional)</span></label>
-            <input type="email" id="email" placeholder="e.g. maria@email.com" autocomplete="email">
-          </div>
-        </div>
-
-        <div class="btn-row">
-          <button class="btn-next" onclick="goPage(1)">Continue &rarr;</button>
         </div>
       </div>
     </div>
 
-    <!-- Page 1: Overall Experience -->
-    <div class="page" id="page1">
-      <div class="section-card card-anim" style="animation-delay:0s;">
-        <div class="s-header">
-          <span class="s-tag">Part 1</span>
-          <span class="s-label">Overall Experience</span>
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">02</div>
+          <div class="flip-icon">🧾</div>
+          <div class="flip-title">Invoice Processing & 3PL Expense Tracker</div>
+          <div class="flip-hint">Tap to see details</div>
         </div>
-        <div class="scale-hint">1 = Strongly Disagree &nbsp;·&nbsp; 5 = Strongly Agree</div>
-
-        <div class="q-wrap" id="wrap-q1">
-          <div class="q-label"><span class="q-num">1</span>I would recommend ACDF to my fellow discipler.</div>
-          <div class="stars" data-q="q1"></div>
-          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
-          <div class="err">Please select a rating.</div>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-02.jpg" alt="Invoice Processing & 3PL Expense Tracker"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">🧾</div>
+            <p>Add a screenshot or Loom<br>for System 02</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">02</div>
+            <div class="flip-back-title">Invoice Processing & 3PL Expense Tracker</div>
+            <div class="flip-desc">Scans 3PL invoices, extracts line items, flags unusual charges, and files everything automatically.</div>
+            <div class="flip-tags"><span class="system-tag">Make</span><span class="system-tag">Google Sheets</span><span class="system-tag">Google Drive</span><span class="system-tag">Finance</span></div>
+          </div>
         </div>
-        <hr class="divider">
-        <div class="q-wrap" id="wrap-q2">
-          <div class="q-label"><span class="q-num">2</span>My overall experience at the ACDF was positive.</div>
-          <div class="stars" data-q="q2"></div>
-          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
-          <div class="err">Please select a rating.</div>
-        </div>
-        <hr class="divider">
-        <div class="q-wrap" id="wrap-q3">
-          <div class="q-label"><span class="q-num">3</span>The ACDF was well-organized.</div>
-          <div class="stars" data-q="q3"></div>
-          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
-          <div class="err">Please select a rating.</div>
-        </div>
-        <hr class="divider">
-        <div class="q-wrap" id="wrap-q4">
-          <div class="q-label"><span class="q-num">4</span>The sessions provided good interaction and engagement.</div>
-          <div class="stars" data-q="q4"></div>
-          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
-          <div class="err">Please select a rating.</div>
-        </div>
-      </div>
-
-      <div class="section-card card-anim" style="animation-delay:0.08s;">
-        <div class="q-wrap">
-          <div class="q-label"><span class="q-num">5</span>What did you like most about ACDF 2026?</div>
-          <textarea id="q5" placeholder="Share what stood out to you..."></textarea>
-        </div>
-        <hr class="divider">
-        <div class="q-wrap">
-          <div class="q-label"><span class="q-num">6</span>What can we improve for future ACDF?</div>
-          <textarea id="q6" placeholder="Your suggestions help us serve better..."></textarea>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-back" onclick="goPage(0)">&larr;</button>
-        <button class="btn-next" onclick="goPage(2)">Next: Sessions &rarr;</button>
       </div>
     </div>
 
-    <!-- Page 2: Sessions -->
-    <div class="page" id="page2">
-      <div class="section-card card-anim" style="animation-delay:0s;">
-        <div class="s-header">
-          <span class="s-tag">Part 2</span>
-          <span class="s-label">Plenary &amp; Breakout Sessions</span>
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">03</div>
+          <div class="flip-icon">⏱️</div>
+          <div class="flip-title">Team Timesheet & Workload Logger</div>
+          <div class="flip-hint">Tap to see details</div>
         </div>
-        <div class="scale-hint">1 = Strongly Disagree &nbsp;·&nbsp; 5 = Strongly Agree</div>
-
-        <div class="q-wrap" id="wrap-q7">
-          <div class="q-label"><span class="q-num">1</span>How would you rate the quality of the plenary session speakers?</div>
-          <div class="stars" data-q="q7"></div>
-          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
-          <div class="err">Please select a rating.</div>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-03.jpg" alt="Team Timesheet & Workload Logger"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">⏱️</div>
+            <p>Add a screenshot or Loom<br>for System 03</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">03</div>
+            <div class="flip-back-title">Team Timesheet & Workload Logger</div>
+            <div class="flip-desc">Pulls Hubstaff timesheets into a Google Sheet database for workload analysis and capacity planning.</div>
+            <div class="flip-tags"><span class="system-tag">Hubstaff</span><span class="system-tag">Google Sheets</span><span class="system-tag">Zapier</span><span class="system-tag">Operations</span></div>
+          </div>
         </div>
-        <hr class="divider">
-        <div class="q-wrap" id="wrap-q8">
-          <div class="q-label"><span class="q-num">2</span>How would you rate the quality of the breakout session speakers?</div>
-          <div class="stars" data-q="q8"></div>
-          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
-          <div class="err">Please select a rating.</div>
-        </div>
-        <hr class="divider">
-        <div class="q-wrap" id="wrap-q9">
-          <div class="q-label"><span class="q-num">3</span>How would you rate the relevance of the topics discussed?</div>
-          <div class="stars" data-q="q9"></div>
-          <div class="scale-ends"><span>Strongly disagree</span><span>Strongly agree</span></div>
-          <div class="err">Please select a rating.</div>
-        </div>
-      </div>
-
-      <div class="section-card card-anim" style="animation-delay:0.08s;">
-        <div class="q-wrap">
-          <div class="q-label"><span class="q-num">4</span>Which topics would you like to see covered in future conferences?</div>
-          <textarea id="q10" placeholder="Share your ideas for future sessions..."></textarea>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-back" onclick="goPage(1)">&larr;</button>
-        <button class="btn-next" id="submitBtn" onclick="handleSubmit()">Submit Feedback</button>
       </div>
     </div>
 
-    <!-- Success Page -->
-    <div class="page" id="pageSuccess">
-      <div class="section-card card-anim success-wrap" style="animation-delay:0s;">
-        <div class="success-icon">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">04</div>
+          <div class="flip-icon">💸</div>
+          <div class="flip-title">Payroll Notification & Receipt Filing System</div>
+          <div class="flip-hint">Tap to see details</div>
         </div>
-        <h2>Thank you so much!</h2>
-        <p class="tagline">Your feedback is a gift that helps ACDF grow<br>and serve disciplers more faithfully.</p>
-        <div class="verse-block">
-          "But as for you, continue in what you have learned and have firmly believed, knowing from whom you learned it."
-          <span class="verse-ref">— 2 Timothy 3:14, ESV</span>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-04.jpg" alt="Payroll Notification & Receipt Filing System"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">💸</div>
+            <p>Add a screenshot or Loom<br>for System 04</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">04</div>
+            <div class="flip-back-title">Payroll Notification & Receipt Filing System</div>
+            <div class="flip-desc">Sends personalized payroll notifications with receipts, then files them in each member's Drive folder.</div>
+            <div class="flip-tags"><span class="system-tag">n8n</span><span class="system-tag">Google Drive</span><span class="system-tag">Email</span><span class="system-tag">Payroll</span></div>
+          </div>
         </div>
-        <div style="display:flex;justify-content:center;">
-          <div class="cert-badge-final">
-            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <span>A certificate of participation will be sent to you for submitting your feedback.</span>
+      </div>
+    </div>
+
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">05</div>
+          <div class="flip-icon">📦</div>
+          <div class="flip-title">Amazon Listing Monitor with AI Analysis</div>
+          <div class="flip-hint">Tap to see details</div>
+        </div>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-05.jpg" alt="Amazon Listing Monitor with AI Analysis"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">📦</div>
+            <p>Add a screenshot or Loom<br>for System 05</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">05</div>
+            <div class="flip-back-title">Amazon Listing Monitor with AI Analysis</div>
+            <div class="flip-desc">Daily listing scrape → KPI extraction → Viktor AI analysis delivered straight to Slack.</div>
+            <div class="flip-tags"><span class="system-tag">n8n</span><span class="system-tag">Viktor AI</span><span class="system-tag">Amazon</span><span class="system-tag">Slack</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">06</div>
+          <div class="flip-icon">🎙️</div>
+          <div class="flip-title">Meeting Notes → AI Presentation Pipeline</div>
+          <div class="flip-hint">Tap to see details</div>
+        </div>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-06.jpg" alt="Meeting Notes → AI Presentation Pipeline"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">🎙️</div>
+            <p>Add a screenshot or Loom<br>for System 06</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">06</div>
+            <div class="flip-back-title">Meeting Notes → AI Presentation Pipeline</div>
+            <div class="flip-desc">Granola records meetings, AI processes the transcript, Gamma AI auto-generates the presentation deck.</div>
+            <div class="flip-tags"><span class="system-tag">Granola</span><span class="system-tag">Gamma AI</span><span class="system-tag">AI Agent</span><span class="system-tag">Productivity</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">07</div>
+          <div class="flip-icon">📸</div>
+          <div class="flip-title">Screenshot Intelligence Logger</div>
+          <div class="flip-hint">Tap to see details</div>
+        </div>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-07.jpg" alt="Screenshot Intelligence Logger"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">📸</div>
+            <p>Add a screenshot or Loom<br>for System 07</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">07</div>
+            <div class="flip-back-title">Screenshot Intelligence Logger</div>
+            <div class="flip-desc">Extracts data from screenshots via vision AI and enters it directly into a Google Sheet database.</div>
+            <div class="flip-tags"><span class="system-tag">n8n</span><span class="system-tag">OCR/Vision</span><span class="system-tag">Google Sheets</span><span class="system-tag">Data</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">08</div>
+          <div class="flip-icon">🛍️</div>
+          <div class="flip-title">Customer Intake → Klaviyo Flow Router</div>
+          <div class="flip-hint">Tap to see details</div>
+        </div>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-08.jpg" alt="Customer Intake → Klaviyo Flow Router"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">🛍️</div>
+            <p>Add a screenshot or Loom<br>for System 08</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">08</div>
+            <div class="flip-back-title">Customer Intake → Klaviyo Flow Router</div>
+            <div class="flip-desc">Typeform submissions → Klaviyo profile updates → automatic routing into the right email flow.</div>
+            <div class="flip-tags"><span class="system-tag">Typeform</span><span class="system-tag">Klaviyo</span><span class="system-tag">Make</span><span class="system-tag">CRM</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">09</div>
+          <div class="flip-icon">🏋️</div>
+          <div class="flip-title">Customer → App Enrollment Pipeline</div>
+          <div class="flip-hint">Tap to see details</div>
+        </div>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-09.jpg" alt="Customer → App Enrollment Pipeline"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">🏋️</div>
+            <p>Add a screenshot or Loom<br>for System 09</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">09</div>
+            <div class="flip-back-title">Customer → App Enrollment Pipeline</div>
+            <div class="flip-desc">Auto-enrolls new customers into Exercise.com on purchase — instant app access, zero manual steps.</div>
+            <div class="flip-tags"><span class="system-tag">Exercise.com</span><span class="system-tag">Zapier</span><span class="system-tag">Onboarding</span><span class="system-tag">eComm</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" tabindex="0">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="flip-num">10</div>
+          <div class="flip-icon">📬</div>
+          <div class="flip-title">Multi-Marketplace Order Alert System</div>
+          <div class="flip-hint">Tap to see details</div>
+        </div>
+                <div class="flip-back">
+          <!-- REPLACE with: <img class="flip-media" src="system-10.jpg" alt="Multi-Marketplace Order Alert System"/> -->
+          <!-- OR: <iframe class="flip-media-loom" src="https://www.loom.com/embed/YOUR_ID" allowfullscreen></iframe> -->
+          <div class="flip-media-placeholder">
+            <div class="flip-media-placeholder-icon">📬</div>
+            <p>Add a screenshot or Loom<br>for System 10</p>
+            <div class="upload-options">
+              <span class="upload-opt">📷 Image</span>
+              <span class="upload-opt">🎥 Loom</span>
+            </div>
+          </div>
+          <div class="flip-back-overlay">
+            <div class="flip-num">10</div>
+            <div class="flip-back-title">Multi-Marketplace Order Alert System</div>
+            <div class="flip-desc">Routes incoming orders to Slack with marketplace source tagged — team tracks and resolves in threads.</div>
+            <div class="flip-tags"><span class="system-tag">n8n</span><span class="system-tag">Slack</span><span class="system-tag">Amazon</span><span class="system-tag">Fulfillment</span></div>
           </div>
         </div>
       </div>
     </div>
 
   </div>
+</section>
 
-  <script>
-    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbylz_mrubbLt_YJem1zNY4ennbH9WNDYby1QXrqMh-7Ez8WsE2PFgS-_y46F9A7ohrn/exec';
-    const ratings = {};
-    const pageRatings = { 1: ['q1','q2','q3','q4'], 2: ['q7','q8','q9'] };
-    let cur = 0;
+<!-- DIVIDER -->
+<div class="divider"></div>
 
-    function buildStars() {
-      document.querySelectorAll('.stars').forEach(container => {
-        const q = container.dataset.q;
-        for (let i = 1; i <= 5; i++) {
-          const btn = document.createElement('button');
-          btn.className = 'star-btn';
-          btn.type = 'button';
-          const num = document.createElement('span');
-          num.textContent = i;
-          const pip = document.createElement('div');
-          pip.className = 'star-pip';
-          btn.appendChild(num);
-          btn.appendChild(pip);
-          btn.onclick = () => selectRating(q, i);
-          container.appendChild(btn);
-        }
-      });
+<!-- SERVICES -->
+<section id="services">
+  <div style="text-align:center;max-width:760px;margin:0 auto 3rem">
+    <div class="section-label">What I Offer</div>
+    <h2 class="section-title" style="font-size:clamp(1.8rem,4vw,2.8rem);">Automation services for lean teams.</h2>
+    <p class="section-desc" style="margin:1rem auto 0;max-width:560px;">Custom automation and systems architecture services for solopreneurs and small teams. If you're doing something manually that a system could handle — that's where I come in.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card featured">
+      <div class="service-badge">Most Popular</div>
+      <div class="service-icon">⚡</div>
+      <div class="service-title">AI Workflow Automation</div>
+      <div class="service-desc">Custom workflow automation built with n8n, Make, or Zapier — connected to your existing tools and integrated with AI agents for intelligent decision-making. From lead routing to invoice processing to payroll notifications, every system is scoped, built, and deployed to your exact process.</div>
+      <ul class="service-list">
+        <li>Custom n8n / Make / Zapier workflows</li>
+        <li>AI agent integration</li>
+        <li>API & webhook connections</li>
+        <li>Google Workspace automation</li>
+        <li>CRM & email platform wiring</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🏗️</div>
+      <div class="service-title">Systems Architecture</div>
+      <div class="service-desc">Before any automation is built, I audit your operations end-to-end — mapping workflows, identifying what should be automated first, and designing a system architecture that makes sense for your team size, tools, and growth stage.</div>
+      <ul class="service-list">
+        <li>Ops audit & workflow mapping</li>
+        <li>Tech stack recommendations</li>
+        <li>SOPs and documentation</li>
+        <li>Bottleneck identification</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🧩</div>
+      <div class="service-title">Ops Consulting & Support</div>
+      <div class="service-desc">For teams that need strategic ops support alongside automation. I help document processes, write SOPs, scope automation projects, and provide ongoing consulting so your operations stay clean as you grow.</div>
+      <ul class="service-list">
+        <li>Executive & ops support</li>
+        <li>Email & calendar management</li>
+        <li>Project coordination</li>
+        <li>Social media ops</li>
+        <li>Reporting & dashboards</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="hero-bg-glow" style="left:50%;top:-10%"></div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Work with<br>Elah Sayson.</h2>
+      <p class="section-desc" style="margin-bottom:1.5rem">
+        Use the PICF brief below to describe your situation. The more specific you are, the faster I can come back with a real plan — not just a "tell me more." I read every submission personally and respond within 24 hours.
+      </p>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/elah-mae-sayson-pm42024/" target="_blank" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          <div>
+            <div style="font-weight:600;color:var(--text-primary);font-size:.88rem">LinkedIn</div>
+            <div style="font-size:.8rem">Elah Mae Sayson</div>
+          </div>
+        </a>
+        <a href="https://www.upwork.com/freelancers/~011ab79f1fcdcad0da" target="_blank" class="contact-link">
+          <div class="contact-link-icon" style="font-size:.7rem;font-weight:700">Up</div>
+          <div>
+            <div style="font-weight:600;color:var(--text-primary);font-size:.88rem">Upwork</div>
+            <div style="font-size:.8rem">View my profile & reviews</div>
+          </div>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61578307425980" target="_blank" class="contact-link">
+          <div class="contact-link-icon">f</div>
+          <div>
+            <div style="font-weight:600;color:var(--text-primary);font-size:.88rem">Facebook</div>
+            <div style="font-size:.8rem">SVAS Business Page</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-title">Send me your brief</div>
+      <div class="form-sub">Use the PICF format below. Once you submit, AI analyzes your brief and sends you an initial automation recommendation within minutes — then we refine it together.</div>
+
+      <form onsubmit="handleSubmit(event)">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-input" placeholder="Jane Smith" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="jane@company.com" required/>
+          </div>
+        </div>
+
+        <div class="picf-block">
+          <div class="picf-label">
+            <span class="picf-letter">P</span>
+            <span class="picf-title">Problem</span>
+            <span class="picf-hint">What's broken or slow?</span>
+          </div>
+          <textarea class="form-textarea" rows="2" placeholder="e.g. We manually copy data from emails into a spreadsheet every day — 2 hours of work, lots of errors." required></textarea>
+        </div>
+
+        <div class="picf-block">
+          <div class="picf-label">
+            <span class="picf-letter">I</span>
+            <span class="picf-title">Information</span>
+            <span class="picf-hint">Your business context</span>
+          </div>
+          <textarea class="form-textarea" rows="2" placeholder="e.g. 3-person e-commerce brand on Amazon & Shopify. I handle ops, partner handles marketing." required></textarea>
+        </div>
+
+        <div class="picf-block">
+          <div class="picf-label">
+            <span class="picf-letter">C</span>
+            <span class="picf-title">Current Tools</span>
+            <span class="picf-hint">Apps you already use</span>
+          </div>
+          <textarea class="form-textarea" rows="1" placeholder="e.g. Shopify, Google Sheets, Slack, Gmail, Klaviyo" required></textarea>
+        </div>
+
+        <div class="picf-block">
+          <div class="picf-label">
+            <span class="picf-letter">F</span>
+            <span class="picf-title">Final Goal</span>
+            <span class="picf-hint">What does success look like?</span>
+          </div>
+          <textarea class="form-textarea" rows="2" placeholder="e.g. Orders auto-logged in Sheets, team gets a Slack alert — zero manual input." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send My Brief →</button>
+        <div class="form-note">You'll get an AI-generated recommendation within minutes. I respond personally within 24 hours.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo"><img src="6.png" alt="SVAS Logo" style="height:26px;width:auto;vertical-align:middle;margin-right:6px;"/>SVAS<span>.</span></a>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#systems">Systems</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.linkedin.com/in/elah-mae-sayson-pm42024/" target="_blank">LinkedIn</a>
+    <a href="https://www.upwork.com/freelancers/~011ab79f1fcdcad0da" target="_blank">Upwork</a>
+  </div>
+  <div class="footer-copy">© 2025 Elah Sayson · Sayson Virtual Assistance Services (SVAS) · AI Systems Architect · Philippines</div>
+</footer>
+
+<script>
+const hamburger=document.getElementById('hamburger');
+const mobileNav=document.getElementById('mobileNav');
+hamburger.addEventListener('click',()=>{mobileNav.classList.toggle('open')});
+function closeMobileNav(){mobileNav.classList.remove('open')}
+
+// Intersection observer for subtle scroll reveals
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
     }
+  });
+},{threshold:.1});
 
-    function selectRating(q, val) {
-      ratings[q] = val;
-      document.querySelector(`.stars[data-q="${q}"]`).querySelectorAll('.star-btn').forEach((b, i) => {
-        b.classList.toggle('sel', i < val);
-      });
-      const wrap = document.getElementById('wrap-' + q);
-      if (wrap) wrap.classList.remove('show-err');
+document.querySelectorAll('.system-card,.service-card,.about-role-card').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(20px)';
+  el.style.transition='opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s';
+  observer.observe(el);
+});
+
+// PICF diagram sequencer
+function runPICF(){
+  const steps = [
+    {node:'pd-p',   conn:null},
+    {node:null,     conn:'pd-conn-pi'},
+    {node:'pd-i',   conn:null},
+    {node:null,     conn:'pd-conn-ic'},
+    {node:'pd-c',   conn:null},
+    {node:null,     conn:'pd-conn-cf'},
+    {node:'pd-f',   conn:null},
+    {node:null,     conn:'pd-conn-out'},
+    {node:'pd-out', conn:null},
+  ];
+
+  let i = 0;
+  // reset all
+  document.querySelectorAll('.pd-node,.pd-connector').forEach(el=>el.classList.remove('active'));
+
+  function next(){
+    if(i >= steps.length){
+      // pause then restart
+      setTimeout(()=>{
+        document.querySelectorAll('.pd-node,.pd-connector').forEach(el=>el.classList.remove('active'));
+        i=0;
+        setTimeout(next, 600);
+      }, 2200);
+      return;
     }
+    const s = steps[i];
+    if(s.node){ document.getElementById(s.node).classList.add('active'); }
+    if(s.conn){ document.getElementById(s.conn).classList.add('active'); }
+    i++;
+    setTimeout(next, s.conn ? 500 : 800);
+  }
+  next();
+}
+window.addEventListener('load', runPICF);
 
-    function updateStepper(n) {
-      for (let i = 0; i < 3; i++) {
-        const sc = document.getElementById('sc' + i);
-        const sn = document.getElementById('sn' + i);
-        sc.classList.remove('active', 'done');
-        sn.classList.remove('active', 'done');
-        if (i < n) {
-          sc.classList.add('done');
-          sn.classList.add('done');
-          sc.textContent = '✓';
-        } else if (i === n) {
-          sc.classList.add('active');
-          sn.classList.add('active');
-          sc.textContent = i + 1;
-        } else {
-          sc.textContent = i + 1;
-        }
-      }
-      for (let i = 0; i < 2; i++) {
-        document.getElementById('sl' + i).classList.toggle('done', i < n);
-      }
+// Flip cards — click to toggle on mobile
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => {
+    card.classList.toggle('flipped');
+  });
+});
+
+async function handleSubmit(e){
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.submit-btn');
+  const inputs = form.querySelectorAll('input,textarea');
+
+  // Gather field values
+  const fields = [...inputs];
+  const name        = fields[0].value;
+  const email       = fields[1].value;
+  const problem     = fields[2].value;
+  const information = fields[3].value;
+  const tools       = fields[4].value;
+  const goal        = fields[5].value;
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  inputs.forEach(i => i.disabled = true);
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, problem, information, tools, goal }),
+    });
+
+    if (res.ok) {
+      btn.textContent = 'Brief Sent ✓ Check your email!';
+      btn.style.background = '#1a5c1a';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = 'Send My Brief →';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+        inputs.forEach(i => i.disabled = false);
+        form.reset();
+      }, 3500);
+    } else {
+      throw new Error('Server error');
     }
-
-    function animatePage(pg) {
-      pg.querySelectorAll('.card-anim').forEach((c, i) => {
-        c.style.animation = 'none';
-        void c.offsetWidth;
-        c.style.animationDelay = (i * 0.08) + 's';
-        c.style.animation = 'cardIn 0.42s cubic-bezier(0.22,1,0.36,1) both';
-      });
-    }
-
-    function goPage(n) {
-      if (n === 1 && cur === 0) {
-        const fn = document.getElementById('firstName').value.trim();
-        const ln = document.getElementById('lastName').value.trim();
-        const ph = document.getElementById('phone').value.trim();
-        document.getElementById('grp-first').classList.toggle('show-err', !fn);
-        document.getElementById('grp-last').classList.toggle('show-err', !ln);
-        document.getElementById('grp-phone').classList.toggle('show-err', !ph);
-        if (!fn || !ln || !ph) return;
-      }
-      if (n === 2 && cur === 1) {
-        let ok = true;
-        pageRatings[1].forEach(q => {
-          if (!ratings[q]) {
-            document.getElementById('wrap-' + q).classList.add('show-err');
-            ok = false;
-          }
-        });
-        if (!ok) {
-          document.querySelector('.show-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          return;
-        }
-      }
-      document.getElementById('page' + cur).classList.remove('active');
-      cur = n;
-      const pg = document.getElementById('page' + n);
-      pg.classList.add('active');
-      animatePage(pg);
-      updateStepper(n);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function handleSubmit() {
-      let ok = true;
-      pageRatings[2].forEach(q => {
-        if (!ratings[q]) {
-          document.getElementById('wrap-' + q).classList.add('show-err');
-          ok = false;
-        }
-      });
-      if (!ok) {
-        document.querySelector('.show-err')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
-
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Submitting...';
-
-      const payload = {
-        submitted_at:        new Date().toISOString(),
-        firstName:           document.getElementById('firstName').value.trim(),
-        lastName:            document.getElementById('lastName').value.trim(),
-        phone:               document.getElementById('phone').value.trim(),
-        email:               document.getElementById('email').value.trim(),
-        q1_recommend:        ratings.q1,
-        q2_overall_positive: ratings.q2,
-        q3_well_organized:   ratings.q3,
-        q4_engagement:       ratings.q4,
-        q5_liked_most:       document.getElementById('q5').value,
-        q6_improvements:     document.getElementById('q6').value,
-        q7_plenary_quality:  ratings.q7,
-        q8_breakout_quality: ratings.q8,
-        q9_topic_relevance:  ratings.q9,
-        q10_future_topics:   document.getElementById('q10').value
-      };
-
-      fetch(SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).then(() => showSuccess()).catch(() => showSuccess());
-    }
-
-    function showSuccess() {
-      ['page0','page1','page2'].forEach(id => document.getElementById(id).classList.remove('active'));
-      document.getElementById('heroTitle').textContent = 'Thank You!';
-      document.getElementById('heroSub').textContent = 'Belong · Believe · Become';
-      document.getElementById('stepper').innerHTML = '';
-      const s = document.getElementById('pageSuccess');
-      s.classList.add('active');
-      animatePage(s);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    buildStars();
-  </script>
-
+  } catch(err) {
+    btn.textContent = 'Something went wrong — try again';
+    btn.style.background = '#5c1a1a';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.textContent = 'Send My Brief →';
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.disabled = false;
+      inputs.forEach(i => i.disabled = false);
+    }, 3000);
+  }
+}
+</script>
 </body>
 </html>
